@@ -36,8 +36,8 @@ Resources:
         Api2Proxy:
           Type: Api
           Properties:
-            Path: /api2 # APIのエンドポイントパス
-            Method: any # HTTPメソッド
+            Path: /api2/{proxy+}
+            Method: any
 
 Outputs:
   Api1FunctionUrl:

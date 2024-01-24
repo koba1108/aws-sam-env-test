@@ -19,3 +19,36 @@ func HealthCheckHandler(c echo.Context) error {
 		TestEnv3: os.Getenv("TEST_ENV_3"),
 	})
 }
+
+type ValidateRequest struct {
+	ID   string `param:"id"`   // path parameter
+	Name string `query:"name"` // query parameter
+	Page int    `query:"page"` // query parameter
+}
+
+type ValidateResponse struct {
+	ID   string `json:"id,omitempty"`
+	Name string `json:"name,omitempty"`
+	Page int    `json:"page,omitempty"`
+}
+
+func ValidateHandler(c echo.Context) error {
+	var req ValidateRequest
+	if err := c.Bind(&req); err != nil {
+		return err
+	}
+	if req.ID == "" {
+		req.ID = "defaultId"
+	}
+	if req.Name == "" {
+		req.Name = "defaultName"
+	}
+	if req.Page == 0 {
+		req.Page = 1
+	}
+	return c.JSON(http.StatusOK, &ValidateResponse{
+		ID:   req.ID,
+		Name: req.Name,
+		Page: req.Page,
+	})
+}

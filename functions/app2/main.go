@@ -16,6 +16,7 @@ func init() {
 	api2 := e.Group("/api2")
 	{
 		api2.GET("", handler.HealthCheckHandler)
+		api2.GET("/validate/:id", handler.ValidateHandler)
 	}
 	echoLambda = echoadapter.New(e)
 }
